@@ -30,7 +30,7 @@ export default function Home() {
           </Link>
         </nav>
       </header>
-      <main className="flex flex-col items-center justify-center flex-grow text-center p-4">
+      <main className="flex flex-col items-center justify-center flex-grow text-center p-4 h-svh">
         <h1 className="text-5xl font-bold text-gray-900 dark:text-white">
           Mint Your NFTs Today
         </h1>
