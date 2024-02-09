@@ -11,15 +11,15 @@ describe("Sqrls", function () {
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
   async function deployOneYearSqrlsFixture() {
-    const totalSupply = 5
+    const maxSupply = 5
     const baseURI = "https://sqrls.com/sqrl/"
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners()
 
     const Sqrls = await ethers.getContractFactory("Sqrls")
-    const sqrls = await Sqrls.deploy(totalSupply, baseURI)
+    const sqrls = await Sqrls.deploy(maxSupply, baseURI)
 
-    return { sqrls, totalSupply, baseURI, owner, otherAccount }
+    return { sqrls, maxSupply, baseURI, owner, otherAccount }
   }
 
   describe("Deployment", function () {
@@ -29,12 +29,10 @@ describe("Sqrls", function () {
       expect(await sqrls.baseURI()).to.equal(baseURI)
     })
 
-    it("Should set the right totalSupply", async function () {
-      const { sqrls, totalSupply } = await loadFixture(
-        deployOneYearSqrlsFixture
-      )
+    it("Should set the right maxSupply", async function () {
+      const { sqrls, maxSupply } = await loadFixture(deployOneYearSqrlsFixture)
 
-      expect(await sqrls.totalSupply()).to.equal(totalSupply)
+      expect(await sqrls.maxSupply()).to.equal(maxSupply)
     })
 
     it("Should set the right owner", async function () {
@@ -65,12 +63,12 @@ describe("Sqrls", function () {
       ).to.be.revertedWith("Send at least 0.01 ETH!")
     })
 
-    it("Should mint totalSupply and revert for more", async function () {
-      const { sqrls, otherAccount, totalSupply } = await loadFixture(
+    it("Should mint maxSupply and revert for more", async function () {
+      const { sqrls, otherAccount, maxSupply } = await loadFixture(
         deployOneYearSqrlsFixture
       )
 
-      for (let i = 0; i < totalSupply; i++) {
+      for (let i = 0; i < maxSupply; i++) {
         await sqrls
           .connect(otherAccount)
           .mint({ value: ethers.parseEther("0.01") })
@@ -78,19 +76,6 @@ describe("Sqrls", function () {
       await expect(
         sqrls.connect(otherAccount).mint({ value: ethers.parseEther("0.009") })
       ).to.be.revertedWith("No more NFTs to mint!")
-    })
-
-    it("Should mint to the right account", async function () {
-      const { sqrls, otherAccount } = await loadFixture(
-        deployOneYearSqrlsFixture
-      )
-      await sqrls
-        .connect(otherAccount)
-        .mint({ value: ethers.parseEther("0.01") })
-
-      expect(await sqrls.connect(otherAccount).ownerOf(0)).to.be.equal(
-        otherAccount.address
-      )
     })
 
     it("Should mint to the right account", async function () {
