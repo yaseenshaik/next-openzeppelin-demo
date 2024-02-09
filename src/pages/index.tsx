@@ -11,14 +11,16 @@ const inter = Inter({ subsets: ["latin"] })
 export default function Home() {
   return (
     <div className={`flex flex-col min-h-screen ${inter.className}`}>
-      <Alert variant="destructive">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Danger</AlertTitle>
-        <AlertDescription>
-          This is a demo website on the Sepolia Testnet! You will lose your ETH!
-          You have been warned!
-        </AlertDescription>
-      </Alert>
+      <div className="animate-in fade-in slide-in-from-top duration-1000">
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Danger</AlertTitle>
+          <AlertDescription>
+            This is a demo website on the Sepolia Testnet! You will lose your
+            ETH! You have been warned!
+          </AlertDescription>
+        </Alert>
+      </div>
       <header className="flex items-center justify-between p-6 bg-white dark:bg-gray-800">
         <Link
           className="text-2xl font-bold text-gray-900 dark:text-white"
