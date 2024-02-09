@@ -1,7 +1,7 @@
 import { ethers, ContractTransactionResponse } from "ethers"
 import { useEffect, useState } from "react"
 import { Button } from "./ui/button"
-import SqrlsABI from "../blockchain/artifacts/contracts/Sqrls.sol/Sqrls.json"
+import SqrlsABI from "../../public/Sqrls.json"
 import { useToast } from "@/components/ui/use-toast"
 import { ToastAction } from "@/components/ui/toast"
 import {
