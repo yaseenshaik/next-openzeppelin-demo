@@ -19,6 +19,8 @@ import { Progress } from "./ui/progress"
 import { ipfsToCFUri } from "@/lib/utils"
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card"
 
+const sqrlsAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
+
 const steps = [
   [0, "Requesting metamask access..."],
   [10, "Please approve the transaction!"],
@@ -70,7 +72,7 @@ export default function MintButton() {
     signer = await provider.getSigner()
     setStatus(1)
 
-    const sqrlsAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string
+    console.log({ sqrlsAddress })
     const contract = new ethers.Contract(sqrlsAddress, SqrlsABI.abi, signer)
     let tx: ContractTransactionResponse
 
